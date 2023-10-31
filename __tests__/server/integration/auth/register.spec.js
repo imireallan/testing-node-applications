@@ -6,7 +6,7 @@ import User from "@models/user";
 const app = () => supertest(server);
 
 describe("The register process", () => {
-  const REGISTER_URL = "/api/v1/auth/register";
+  const REGISTER_ENDPOINT = "/api/v1/auth/register";
   const user = {
     name: "Test User4",
     email: "test@user4.com",
@@ -21,14 +21,14 @@ describe("The register process", () => {
   });
 
   it("Should register a new user", async () => {
-    const response = await app().post(REGISTER_URL).send(user);
+    const response = await app().post(REGISTER_ENDPOINT).send(user);
     expect(response.status).toBe(200);
     expect(response.body.data.token).toBeDefined();
     expect(response.body.message).toBe("Account registered.");
   });
   it("Should return validation error for exixting user", async () => {
     await User.create(user);
-    const response = await app().post(REGISTER_URL).send(user);
+    const response = await app().post(REGISTER_ENDPOINT).send(user);
     expect(response.status).toBe(422);
     expect(response.body.message).toBe("Validation failed.");
     expect(response.body.data.errors).toEqual({
