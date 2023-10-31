@@ -1,4 +1,5 @@
 import loginValidator from "@validators/login";
+import Response from "@tests/utils/response"
 
 describe("The login validator", () => {
   it("Should call the next function when validation succeeds", async () => {
@@ -8,7 +9,7 @@ describe("The login validator", () => {
         password: "pass@word1",
       },
     };
-    const res = {};
+    const res = new Response()
     const next = jest.fn();
 
     await loginValidator(req, res, next);
@@ -16,15 +17,7 @@ describe("The login validator", () => {
     expect(next).toHaveBeenCalled();
   });
   it("Should return 422 when validation fails", async () => {
-    class Response {
-      status(status) {
-        this.status = status;
-        return this;
-      }
-      json(data) {
-        this.data = data;
-      }
-    }
+
     const req = {
       body: {
         password: "pass@word1",

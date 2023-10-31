@@ -1,18 +1,7 @@
-import mongoose from "mongoose";
-import jwt from "jsonwebtoken";
-import config from "@config";
 import authMiddleware from "@middleware/auth";
 import User from "@models/User";
-
-class Response {
-  status(status) {
-    this.status = status;
-    return this;
-  }
-  json(data) {
-    this.data = data;
-  }
-}
+import { connect, disconnect } from "@tests/utils/mongoose";
+import Response from "@tests/utils/response";
 
 describe("The auth middleware", () => {
   const user = {
@@ -22,14 +11,11 @@ describe("The auth middleware", () => {
   };
   let createdUser;
   beforeAll(async () => {
-    await mongoose.connect("mongodb://localhost:27017/urbanstore_test", {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await connect();
     createdUser = await User.create(user);
   });
   afterAll(async () => {
-    await mongoose.connection.close();
+    await disconnect();
   });
   it("Should called the next function if authentication is successfull", async () => {
     const token = createdUser.generateToken();
