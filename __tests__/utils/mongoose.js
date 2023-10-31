@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
+import config from '@server/config'
 
 export const connect = () =>
-  mongoose.connect("mongodb://localhost:27017/urbanstore_test", {
+  mongoose.connect(config.databaseUrl[config.environment], {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
