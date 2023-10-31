@@ -1,0 +1,10 @@
+{
+  "data": {
+    "user": {
+      "name": "Test User4",
+      "email": "test@user4.com",
+      "password": "pass@word1"
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+  }
+}
